@@ -1,6 +1,10 @@
 import { Route, Routes } from "react-router";
+import { Flip, ToastContainer } from "react-toastify";
 import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import Feed from "../pages/Feed";
 
 const AppRoutes = () => {
   return (
@@ -8,7 +12,17 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<PageNotFound />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
+        <Route path="/feed" element={<Feed />} />
       </Routes>
+      <ToastContainer
+        autoClose={1000}
+        hideProgressBar
+        // theme={theme}
+        transition={Flip}
+        position="top-center"
+      />
     </>
   );
 };
