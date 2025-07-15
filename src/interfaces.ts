@@ -3,6 +3,12 @@ export interface IUser {
   username: string;
   firstName: string;
   lastName: string;
+  profilePicture?: string
+  _count?: {
+    followers: number;
+    following: number;
+    posts: number
+  }
 }
 
 export interface IPost {

@@ -4,7 +4,6 @@ import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
 import type { IUser } from "../interfaces";
 
-
 interface IAuthValues {
   userData: IUser | null;
   loading: boolean;
@@ -63,7 +62,6 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
       >
         {children}
       </AuthContext.Provider>
-      ;
     </>
   );
 };

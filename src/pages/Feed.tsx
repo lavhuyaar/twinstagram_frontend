@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import usePagination from "../hooks/usePagination";
 import type { IPost } from "../interfaces";
+import MainLayout from "../components/MainLayout";
 
 const Feed = () => {
   const { userData } = useAuth();
@@ -25,11 +26,12 @@ const Feed = () => {
 
   return (
     <>
-      <main className="bg-amber-400 w-full h-screen"></main>
-      {hasMore && <button onClick={fetchMore}>Load more</button>}
-      {isFetching && <p>Loading..........</p>}
-      {!hasMore && <p>No data left to load</p>}
-      {error && <p>{error}</p>}
+      <MainLayout>
+        {hasMore && <button onClick={fetchMore}>Load more</button>}
+        {isFetching && <p>Loading..........</p>}
+        {!hasMore && <p>No data left to load</p>}
+        {error && <p>{error}</p>}
+      </MainLayout>
     </>
   );
 };

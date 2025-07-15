@@ -1,1 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --background: 248 245 252;
+  --surface: 255 255 255;
+  --primary: 255 99 140; /* softened hot pink */
+  --primary-hover: 235 75 120; /* gentle hover effect */
+  --primary-txt: 255 255 255;
+
+  --text-primary: 30 30 30;
+  --text-secondary: 90 90 90;
+  --text-muted: 140 140 140;
+
+  --hover-bg: 240 238 250;
+
+  --color-background: rgb(var(--background));
+  --color-surface: rgb(var(--surface));
+  --color-primary: rgb(var(--primary));
+  --color-primary-hover: rgb(var(--primary-hover));
+  --color-primary-txt: rgb(var(--primary-txt));
+  --color-text-primary: rgb(var(--text-primary));
+  --color-text-secondary: rgb(var(--text-secondary));
+  --color-text-muted: rgb(var(--text-muted));
+  --color-hover-bg: rgb(var(--hover-bg));
+}
+
+.dark {
+  --background: 22 20 30;
+  --surface: 35 33 45;
+  --primary: 255 115 160; /* brighter version for dark */
+  --primary-hover: 235 95 140;
+  --primary-txt: 20 20 20;
+
+  --text-primary: 230 230 230;
+  --text-secondary: 180 180 180;
+  --text-muted: 150 150 150;
+
+  --hover-bg: 48 44 60;
+
+  --color-background: rgb(var(--background));
+  --color-surface: rgb(var(--surface));
+  --color-primary: rgb(var(--primary));
+  --color-primary-hover: rgb(var(--primary-hover));
+  --color-primary-txt: rgb(var(--primary-txt));
+  --color-text-primary: rgb(var(--text-primary));
+  --color-text-secondary: rgb(var(--text-secondary));
+  --color-text-muted: rgb(var(--text-muted));
+  --color-hover-bg: rgb(var(--hover-bg));
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-family: "Noto Sans", sans-serif;
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  align-items: center;
+}
