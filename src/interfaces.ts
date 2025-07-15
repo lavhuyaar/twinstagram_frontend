@@ -3,7 +3,8 @@ export interface IUser {
   username: string;
   firstName: string;
   lastName: string;
-  profilePicture?: string
+  profilePicture?: string;
+  profileType: 'PUBLIC' | 'PRIVATE'
   _count?: {
     followers: number;
     following: number;

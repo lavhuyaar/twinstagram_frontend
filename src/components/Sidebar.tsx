@@ -7,7 +7,6 @@ import {
   IoSettingsOutline,
 } from "react-icons/io5";
 import useAuth from "../hooks/useAuth";
-import ThemeToggler from "./ThemeToggler";
 
 interface ILink {
   path: string;
@@ -16,7 +15,7 @@ interface ILink {
 }
 
 const Sidebar = ({ className }: { className?: string }) => {
-  const { userData } = useAuth();
+  const { userData, logoutUser } = useAuth();
 
   const links: ILink[] = [
     {
@@ -111,11 +110,10 @@ const Sidebar = ({ className }: { className?: string }) => {
           ))}
         </section>
 
-        <div className="flex items-center gap-4 mt-16 pl-3">
-          <ThemeToggler />
-          <span className="text-[16px]">Dark Mode</span>
-        </div>
-        <button className="cursor-pointer font-medium text-[16px] mt-24 text-start w-full flex gap-4 items-center hover:text-primary-hover transition rounded-full py-2 px-4">
+        <button
+          onClick={logoutUser}
+          className="cursor-pointer font-medium text-[16px] mt-48 text-start w-full flex gap-4 items-center hover:text-primary-hover transition rounded-full py-2 px-4"
+        >
           <MdLogout className="text-xl" />
           <span>Logout</span>{" "}
         </button>

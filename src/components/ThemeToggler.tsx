@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useTheme from "../hooks/useTheme";
+import CustomToggler from "./CustomToggler";
 
 const ThemeToggler = () => {
   const { theme, toggleTheme } = useTheme();
@@ -11,24 +12,15 @@ const ThemeToggler = () => {
 
   return (
     <>
-      <div
-        className="w-[60px] h-8 flex shrink-0 items-center p-1 rounded-full cursor-pointer transition-all duration-300 border border-text-muted"
+      <CustomToggler
+        isChecked={isChecked}
         onClick={toggleTheme}
-      >
-        <div
-          className={`h-full w-6 rounded-full transition-transform transform duration-500 flex items-center justify-center ${
-            isChecked
-              ? "translate-x-[24px] bg-primary"
-              : "translate-x-[1px] bg-text-primary"
-          }`}
-        >
-          {isChecked ? (
-            <span className="text-primary"></span>
-          ) : (
-            <span className="text-surface"></span>
-          )}
-        </div>
-      </div>
+        title={
+          isChecked
+            ? "Dark Mode is enabled. Click here to disable it!"
+            : "Dark Mode is disabled. Click here to enable it!"
+        }
+      />
     </>
   );
 };

@@ -12,7 +12,9 @@ export const handleAxiosError = (
   if (isAxiosError(error)) {
     if (!hideToast) {
       toast.dismiss();
-      toast.error(error.response?.data?.error || helperMessage); //Error snackbar
+      toast.error(error.response?.data?.error || helperMessage, {
+        autoClose: 3000,
+      }); //Error snackbar
     }
     if (setError) {
       setError(error.response?.data?.error || "Internal Server Error");

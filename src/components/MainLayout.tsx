@@ -7,8 +7,8 @@ const MainLayout = ({ children }: { children?: React.ReactNode }) => {
     <>
       {/* <Header /> */}
       <main className="h-screen w-full flex max-w-[1800px]">
-        <Sidebar className="overflow-x-auto w-[400px] z-99 overflow-y-auto flex flex-col bg-surface p-4 gap-2 text-text-primary" />
-        <section className="h-full w-full overflow-y-auto p-4 text-text-primary">
+        <Sidebar className="hidden md:flex overflow-x-auto w-[400px] z-99 overflow-y-auto flex-col bg-surface p-4 gap-2 text-text-primary" />
+        <section className="h-full w-full overflow-y-auto text-text-primary flex flex-col p-10">
           {children}
         </section>
       </main>

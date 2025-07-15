@@ -9,6 +9,7 @@ interface IAuthValues {
   loading: boolean;
   loginUser: (credentials: { username: string; password: string }) => void;
   logoutUser: () => void;
+  saveData: (user: IUser) => void;
 }
 
 const AuthContext = createContext<IAuthValues | null>(null);
@@ -28,8 +29,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
     try {
       const response = await axiosInstance.post("/auth/login", credentials);
       const { user } = response.data;
-      setUserData(user);
-      localStorage.setItem("twinstagram_logged_in_user", JSON.stringify(user));
+      saveData(user);
       toast.dismiss();
       toast.success("User logged in successfully!");
     } catch (error) {
@@ -37,6 +37,13 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const saveData = (data: IUser) => {
+    setUserData(() => {
+      localStorage.setItem("twinstagram_logged_in_user", JSON.stringify(data));
+      return data;
+    });
   };
 
   const logoutUser = async () => {
@@ -58,7 +65,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
   return (
     <>
       <AuthContext.Provider
-        value={{ userData, loading, loginUser, logoutUser }}
+        value={{ userData, loading, loginUser, logoutUser, saveData }}
       >
         {children}
       </AuthContext.Provider>

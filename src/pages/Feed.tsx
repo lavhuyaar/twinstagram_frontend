@@ -1,20 +1,10 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import useAuth from "../hooks/useAuth";
 import usePagination from "../hooks/usePagination";
 import type { IPost } from "../interfaces";
 import MainLayout from "../components/MainLayout";
+import RedirectToLogin from "../components/RedirectToLogin";
 
 const Feed = () => {
-  const { userData } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!userData) {
-      navigate("/auth/login");
-    }
-  }, [userData]);
-
   const { data, isFetching, error, hasMore, fetchMore } = usePagination<IPost>({
     endpoint: "/posts/feed",
     dataKey: "posts",
@@ -26,6 +16,7 @@ const Feed = () => {
 
   return (
     <>
+      <RedirectToLogin />
       <MainLayout>
         {hasMore && <button onClick={fetchMore}>Load more</button>}
         {isFetching && <p>Loading..........</p>}
