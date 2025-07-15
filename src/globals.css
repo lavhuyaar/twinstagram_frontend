@@ -4,8 +4,8 @@
 @theme {
   --background: 248 245 252;
   --surface: 255 255 255;
-  --primary: 255 99 140; /* softened hot pink */
-  --primary-hover: 235 75 120; /* gentle hover effect */
+  --primary: 255 99 140;
+  --primary-hover: 235 75 120;
   --primary-txt: 255 255 255;
 
   --text-primary: 30 30 30;
@@ -28,7 +28,7 @@
 .dark {
   --background: 22 20 30;
   --surface: 35 33 45;
-  --primary: 255 115 160; /* brighter version for dark */
+  --primary: 255 115 160;
   --primary-hover: 235 95 140;
   --primary-txt: 20 20 20;
 
@@ -64,4 +64,28 @@ body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
   align-items: center;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 0px;
 }

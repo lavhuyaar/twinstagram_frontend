@@ -4,17 +4,23 @@ export interface IUser {
   firstName: string;
   lastName: string;
   profilePicture?: string;
-  profileType: 'PUBLIC' | 'PRIVATE'
+  profileType: "PUBLIC" | "PRIVATE";
   _count?: {
     followers: number;
     following: number;
-    posts: number
-  }
+    posts: number;
+  };
 }
 
 export interface IPost {
   id: string;
   content: string;
   userId: string;
-  user?: IUser
+  user?: IUser;
+  image?: string;
+  likes?: IUser[];
+  _count?: {
+    likes: number;
+    comments: number;
+  };
 }
