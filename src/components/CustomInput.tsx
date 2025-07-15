@@ -19,14 +19,15 @@ const CustomInput: React.FC<ICustomInput> = ({
 }) => {
   return (
     <>
-      <div className="flex flex-col w-full gap-2">
-        <label htmlFor={name} id={name} className="font-semibold text-lg">
+      <div className="flex flex-col w-full gap-1 relative">
+        <label htmlFor={name} className="font-semibold text-[12px]">
           {labelText}
         </label>
         <input
           autoComplete="off"
           defaultValue={value}
-          className="border-text-primary/10 text-text-primary/60 focus:outline-none align-middle border rounded-md px-3 py-2"
+          id={name}
+          className="border-text-primary/10 text-text-primary/60 focus:outline-none align-middle border p-3 italic"
           {...register(name, { required: true })}
           type={type}
           placeholder={placeholder}

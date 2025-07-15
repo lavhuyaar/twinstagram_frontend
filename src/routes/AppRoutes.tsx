@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 import { Flip, ToastContainer } from "react-toastify";
+import useTheme from "../hooks/useTheme";
 import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
 import Login from "../pages/Login";
@@ -8,6 +9,7 @@ import Feed from "../pages/Feed";
 import Settings from "../pages/Settings";
 
 const AppRoutes = () => {
+  const { theme } = useTheme();
   return (
     <>
       <Routes>
@@ -21,7 +23,7 @@ const AppRoutes = () => {
       <ToastContainer
         autoClose={1000}
         hideProgressBar
-        // theme={theme}
+        theme={theme}
         transition={Flip}
         position="top-center"
       />

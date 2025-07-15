@@ -49,7 +49,13 @@ const Settings = () => {
 
       <MainLayout>
         <section className="w-full flex flex-col">
-          <h1 className="text-3xl font-bold text-primary">Settings</h1>
+          <h1 className="text-3xl font-bold text-primary">
+            {selectedOption === "edit_profile"
+              ? " Edit Profile"
+              : selectedOption === "about"
+              ? "About"
+              : "Settings"}
+          </h1>
           <span className="w-full h-[2px] bg-primary mt-1"></span>
         </section>
         {!selectedOption && (
@@ -65,7 +71,7 @@ const Settings = () => {
 
             <List title="About" onClick={() => optionOnClick("about")}>
               <span className="flex items-center gap-2">
-                About <BiInfoSquare className="text-xl"/>
+                About <BiInfoSquare className="text-xl" />
               </span>
               <MdKeyboardArrowRight className="text-2xl" />
             </List>

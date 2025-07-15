@@ -6,7 +6,7 @@ import { axiosInstance } from "../api/axiosInstance";
 import { PROFILE_TYPE } from "../constants/constants";
 
 const ProfileTypeToggler = () => {
-  const { userData, saveData } = useAuth();
+  const { userData, saveUser } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState(
     userData?.profileType === PROFILE_TYPE.PRIVATE
@@ -24,7 +24,7 @@ const ProfileTypeToggler = () => {
       );
       const { user } = response.data;
       setIsChecked(user?.profileType === PROFILE_TYPE.PRIVATE);
-      saveData(user);
+      saveUser(user);
     } catch (err) {
       handleAxiosError(err, "Failed to change profile type!", undefined, false);
     } finally {
