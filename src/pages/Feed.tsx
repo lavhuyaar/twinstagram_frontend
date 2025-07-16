@@ -1,21 +1,11 @@
-import { useEffect } from "react";
-import usePagination from "../hooks/usePagination";
-import type { IPost } from "../interfaces";
 import MainLayout from "../components/MainLayout";
 import RedirectToLogin from "../components/RedirectToLogin";
 import Post from "../components/Post";
 import PostSkeleton from "../components/skeletons/PostSkeleton";
+import useFeedPosts from "../hooks/useFeedPosts";
 
 const Feed = () => {
-  const { data, isFetching, error, hasMore, fetchMore } = usePagination<IPost>({
-    endpoint: "/posts/feed",
-    dataKey: "posts",
-  });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+  const { posts, isFetching, fetchMore, hasMore, error } = useFeedPosts();
   return (
     <>
       <RedirectToLogin />
@@ -25,7 +15,7 @@ const Feed = () => {
         </h1>
 
         <section className="flex gap-5 flex-wrap mx-auto justify-center justify-self-center my-12">
-          {data.map((post) => (
+          {posts.map((post) => (
             <Post {...post} key={post?.id} />
           ))}
           {isFetching &&

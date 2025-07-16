@@ -50,6 +50,7 @@ const usePagination = <T,>({
   const fetchMore = () => {
     if (!hasMore) return;
     setCurrentPage((prev) => prev + 1);
+    fetchData(currentPage + 1);
   };
 
   return { data, isFetching, error, hasMore, fetchMore };

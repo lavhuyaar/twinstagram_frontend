@@ -19,8 +19,35 @@ export interface IPost {
   user?: IUser;
   image?: string;
   likes?: IUser[];
-  _count?: {
+  _count: {
     likes: number;
     comments: number;
   };
+  createdAt: string;
+  upatedAt: string;
+}
+
+export interface IComment {
+  id: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  postId: string;
+  userId: string;
+  user?: IUser;
+  post?: IPost;
+  _count: {
+    replies: number;
+  };
+}
+
+export interface ICommentReply {
+  id: string;
+  postId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  user?: IUser;
+  parentCommentId: string;
 }

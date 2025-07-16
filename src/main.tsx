@@ -6,13 +6,16 @@ import "./globals.css";
 import AppRoutes from "./routes/AppRoutes";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { FeedPostsProvider } from "./contexts/FeedPostsContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <AppRoutes />
+          <FeedPostsProvider>
+            <AppRoutes />
+          </FeedPostsProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

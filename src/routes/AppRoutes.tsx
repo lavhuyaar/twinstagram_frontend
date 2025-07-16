@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Feed from "../pages/Feed";
 import Settings from "../pages/Settings";
+import PostDetail from "../pages/PostDetail";
 
 const AppRoutes = () => {
   const { theme } = useTheme();
@@ -19,6 +20,7 @@ const AppRoutes = () => {
         <Route path="/auth/register" element={<Register />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/p/:postId" element={<PostDetail />} />
       </Routes>
       <ToastContainer
         autoClose={1000}
