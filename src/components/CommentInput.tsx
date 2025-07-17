@@ -111,12 +111,12 @@ const CommentInput = ({
             <img
               src={userData?.profilePicture ?? "/blank-pfp.webp"}
               alt=""
-              className="size-[40px] rounded-full shrink-0"
+              className="size-[30px] sm:size-[40px] rounded-full shrink-0"
             />
           )}
           <div
             className={`flex flex-col gap-1 w-full ${
-              isEditMode ? "pr-6" : "px-6 "
+              isEditMode ? "sm:pr-6 pr-3" : "sm:px-6 px-3"
             }`}
           >
             <textarea
@@ -131,7 +131,7 @@ const CommentInput = ({
             )}
           </div>
         </div>
-        <div className="self-end px-6 flex items-center gap-3">
+        <div className="self-end px-3 sm:px-6 flex items-center gap-3">
           <button
             disabled={submitting}
             onClick={cancelOnClick}

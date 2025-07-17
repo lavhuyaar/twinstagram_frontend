@@ -95,11 +95,11 @@ const Comment = ({
         />
       )}
 
-      <div className="flex items-center gap-4 w-full">
+      <div className="flex items-center gap-2 md:gap-4 w-full">
         <img
           src={user?.profilePicture ?? "/blank-pfp.webp"}
           alt=""
-          className="size-[40px] rounded-full shrink-0 self-start"
+          className="size-[30px] sm:size-[40px] rounded-full shrink-0 self-start"
         />
 
         <div className="flex flex-col w-full">
@@ -123,14 +123,14 @@ const Comment = ({
             {userData?.id === comment?.userId && (
               <button
                 onClick={isOpen ? closeMenu : openMenu}
-                className="ml-auto pr-4 bg-none cursor-pointer"
+                className="ml-auto md:pr-4 bg-none cursor-pointer"
               >
                 <SlOptionsVertical />
               </button>
             )}
             {isOpen && (
               <div
-                className="bg-surface absolute items-start right-10 flex flex-col gap-2 px-6 py-2 top-0 text-start"
+                className="bg-surface absolute items-start rounded-md right-10 flex flex-col gap-2 px-6 py-2 top-0 text-start"
                 ref={menuRef}
               >
                 <button
@@ -161,7 +161,7 @@ const Comment = ({
               editComment={editComment}
             />
           ) : (
-            <pre className="text-wrap text-sm md:text-[16px] mt-[3px] break-after-all">
+            <pre className="text-wrap text-sm md:text-[16px] mt-[3px] break-all">
               {comment?.content}
             </pre>
           )}

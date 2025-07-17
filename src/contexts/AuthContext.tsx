@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
       setUserData(null);
       localStorage.removeItem("twinstagram_logged_in_user");
       toast.dismiss();
+      window.location.href = "/auth/login";
       toast.success("User logged out successfully!");
     } catch (error) {
       handleAxiosError(error);

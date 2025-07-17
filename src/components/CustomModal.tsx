@@ -17,7 +17,7 @@ const CustomModal = ({
 }: IModalProps) => {
   return (
     <div className="fixed inset-0 z-[99999] bg-background/80 flex items-center justify-center">
-      <div className=" p-12 rounded bg-surface min-size-[250px] flex flex-col gap-4">
+      <div className=" p-12 rounded-md bg-surface min-size-[250px] max-w-[90%] flex flex-col gap-4">
         <p>{textMessage}</p>
         <div className="flex gap-4 mt-4 justify-center items-center">
           <button

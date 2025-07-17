@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router";
-// import { toast } from "react-toastify";
+import { NavLink } from "react-router";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAuth from "../hooks/useAuth";
 import Header from "../components/Header";
@@ -16,11 +15,10 @@ interface ILoginFormValues {
 
 const Login = () => {
   const { userData, loading, loginUser, logoutUser } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (userData) {
-      navigate("/feed", { replace: true });
+      window.location.href = "/feed";
     }
   }, [userData]);
 
