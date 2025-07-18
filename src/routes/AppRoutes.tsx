@@ -9,7 +9,7 @@ import Feed from "../pages/Feed";
 import Settings from "../pages/Settings";
 import PostDetail from "../pages/PostDetail";
 import AddPost from "../pages/AddPost";
-import EditPost from "../pages/EditPost";
+import UserProfile from "../pages/UserProfile";
 
 const AppRoutes = () => {
   const { theme } = useTheme();
@@ -24,7 +24,7 @@ const AppRoutes = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/p/:postId" element={<PostDetail />} />
         <Route path="/post/new" element={<AddPost />} />
-        <Route path="/post/edit" element={<EditPost />} />
+        <Route path="/u/:userId" element={<UserProfile />} />
       </Routes>
       <ToastContainer
         autoClose={1000}

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
+import { toast } from "react-toastify";
 import type { InferType } from "yup";
 import { RxCross2 } from "react-icons/rx";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -12,7 +13,6 @@ import { profileSchema } from "../validators/profileSchema";
 import CustomInput from "../components/CustomInput";
 import { PROFILE_TYPE } from "../constants/constants";
 import CustomToggler from "../components/CustomToggler";
-import { toast } from "react-toastify";
 
 type IProfileValues = InferType<typeof profileSchema>;
 
@@ -25,6 +25,7 @@ const EditProfileSection = () => {
   const [isPrivateAccount, setIsPrivateAccount] = useState<boolean>(
     userData?.profileType === PROFILE_TYPE.PRIVATE
   );
+  const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -97,14 +98,16 @@ const EditProfileSection = () => {
     }
   };
 
+  const goBack = () => navigate(-1);
+
   return (
     <section className="flex flex-col w-full mt-6 items-center">
-      <Link
-        to="/settings"
-        className="flex items-center gap-3 hover:text-primary-hover transition self-start"
+      <button
+        onClick={goBack}
+        className="flex items-center gap-3 cursor-pointer hover:text-primary-hover transition self-start"
       >
-        <FaArrowLeft /> Go back to Settings
-      </Link>
+        <FaArrowLeft /> Go back
+      </button>
 
       <form
         onSubmit={handleSubmit(onSubmit)}

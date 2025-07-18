@@ -35,7 +35,7 @@ const Sidebar = ({ className }: { className?: string }) => {
       icon: <IoPeopleOutline className="text-xl" />,
     },
     {
-      path: "/my-profile",
+      path: `/u/${userData?.id}`,
       text: "My Profile",
       icon: <CgProfile className="text-xl" />,
     },

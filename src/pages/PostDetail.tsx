@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { IoMdHeart } from "react-icons/io";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -20,6 +20,8 @@ const PostDetail = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [likesLoading, setLikesLoading] = useState<boolean>(false);
   const { userData } = useAuth();
+
+  const navigate = useNavigate();
 
   const getPost = async () => {
     setError(undefined);
@@ -58,15 +60,18 @@ const PostDetail = () => {
     return <Error error={error} onRetry={getPost} />;
   }
 
+  const goBack = () => navigate(-1);
+
   return (
     <>
       <MainLayout>
-        <Link
-          to="/feed"
-          className="flex items-center gap-3 hover:text-primary-hover transition self-start mb-4"
+        <button
+          onClick={goBack}
+          type="button"
+          className="flex items-center gap-3 hover:text-primary-hover cursor-pointer transition self-start mb-4"
         >
-          <FaArrowLeft /> Go back to Feed
-        </Link>
+          <FaArrowLeft /> Go back
+        </button>
         {loading ? (
           <PostDetailSkeleton />
         ) : (
@@ -79,9 +84,12 @@ const PostDetail = () => {
                   className="shrink-0 size-[40px] rounded-full object-center object-cover"
                 />
                 <div>
-                  <h3 className="font-medium text-lg">
+                  <Link
+                    to={`/u/${post?.userId}`}
+                    className="font-medium text-lg hover:text-primary transition"
+                  >
                     {post?.user?.username}
-                  </h3>
+                  </Link>
                   <h4 className="text-text-muted text-xs">
                     {post?.user?.firstName} {post?.user?.lastName}
                   </h4>
