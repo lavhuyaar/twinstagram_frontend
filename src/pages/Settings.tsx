@@ -2,7 +2,6 @@ import { useSearchParams } from "react-router";
 import { BiInfoSquare } from "react-icons/bi";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import MainLayout from "../components/MainLayout";
-import RedirectToLogin from "../components/RedirectToLogin";
 import ThemeToggler from "../components/ThemeToggler";
 import ProfileTypeToggler from "../components/ProfileTypeToggler";
 import AboutSection from "../sections/AboutSection";
@@ -45,8 +44,6 @@ const Settings = () => {
 
   return (
     <>
-      <RedirectToLogin />
-
       <MainLayout>
         <section className="w-full flex flex-col">
           <h1 className="text-3xl font-bold text-primary">

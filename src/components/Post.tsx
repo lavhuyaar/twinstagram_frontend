@@ -20,7 +20,7 @@ const Post = memo(
       <>
         <div
           onClick={cardOnClick}
-          className={`bg-surface w-full md:w-2/3 flex flex-col shrink-0 hover:scale-105 transition duration-300 cursor-pointer`}
+          className={`bg-surface w-full lg:w-2/3 flex flex-col shrink-0 hover:scale-105 transition duration-300 cursor-pointer`}
         >
           <Link
             to={`/users/${userId}`}

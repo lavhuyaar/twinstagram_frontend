@@ -1,5 +1,6 @@
 // import Footer from "./Footer";
 // import Header from "./Header";
+import RedirectToLogin from "./RedirectToLogin";
 import Sidebar from "./Sidebar";
 
 const MainLayout = ({
@@ -11,6 +12,7 @@ const MainLayout = ({
 }) => {
   return (
     <>
+      <RedirectToLogin />
       {/* <Header /> */}
       <div className="h-screen w-full flex max-w-[1800px]">
         <Sidebar className="hidden md:flex overflow-x-auto w-[400px] z-99 overflow-y-auto flex-col bg-surface p-4 gap-2 text-text-primary" />

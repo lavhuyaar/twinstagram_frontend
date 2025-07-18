@@ -31,7 +31,10 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
       const { user } = response.data;
       saveUser(user);
       toast.dismiss();
-      toast.success("User logged in successfully!");
+      toast.success("User logged in successfully!", {
+        autoClose: 2000,
+        onClose: () => (window.location.href = "/feed"),
+      });
     } catch (error) {
       handleAxiosError(error);
     } finally {
@@ -51,11 +54,11 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
     setLoading(true);
     try {
       await axiosInstance.get("/auth/logout");
-      setUserData(null);
-      localStorage.removeItem("twinstagram_logged_in_user");
+      // window.location.href = "/auth/login";
       toast.dismiss();
-      window.location.href = "/auth/login";
       toast.success("User logged out successfully!");
+      localStorage.removeItem("twinstagram_logged_in_user");
+      setUserData(null);
     } catch (error) {
       handleAxiosError(error);
     } finally {

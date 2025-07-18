@@ -1,15 +1,19 @@
+import { Link } from "react-router";
+import useFeedPosts from "../hooks/useFeedPosts";
+import Error from "../components/Error";
 import MainLayout from "../components/MainLayout";
-import RedirectToLogin from "../components/RedirectToLogin";
 import Post from "../components/Post";
 import PostSkeleton from "../components/skeletons/PostSkeleton";
-import useFeedPosts from "../hooks/useFeedPosts";
-import { Link } from "react-router";
 
 const Feed = () => {
   const { posts, isFetching, fetchMore, hasMore, error } = useFeedPosts();
+
+  if (error) {
+    return <Error error={error} onRetry={() => location.reload()} />;
+  }
+
   return (
     <>
-      <RedirectToLogin />
       <MainLayout>
         <div className="flex items-center justify-between gap-4 w-full">
           <h1 className="text-3xl w-full font-medium text-primary self-start">

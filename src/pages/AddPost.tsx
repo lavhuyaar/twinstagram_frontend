@@ -9,7 +9,6 @@ import { axiosInstance } from "../api/axiosInstance";
 import { postSchema } from "../validators/postSchema";
 import { MdOutlineAddBox } from "react-icons/md";
 import { useNavigate } from "react-router";
-import RedirectToLogin from "../components/RedirectToLogin";
 
 type IPostValues = InferType<typeof postSchema>;
 
@@ -82,7 +81,6 @@ const AddPost = () => {
 
   return (
     <>
-      <RedirectToLogin />
       <MainLayout>
         <div className="w-full flex flex-col">
           <h1 className="text-3xl w-full font-bold text-primary self-start">

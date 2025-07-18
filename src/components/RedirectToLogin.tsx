@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 const RedirectToLogin = () => {
   const { userData } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userData) {
-      window.location.href = "/auth/login";
+      navigate("/auth/login", { replace: true });
     }
   }, [userData]);
 
