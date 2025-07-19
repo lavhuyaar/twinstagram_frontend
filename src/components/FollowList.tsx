@@ -3,10 +3,11 @@ import { NavLink } from "react-router";
 import { RxCross2 } from "react-icons/rx";
 import useAuth from "../hooks/useAuth";
 import Modal from "./Modal";
+import UserSkeleton from "./skeletons/UserSkeleton";
 import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
+import { abbreviateNumber } from "../utils/abbreviateNumber";
 import type { IFollowUser } from "../interfaces";
-import UserSkeleton from "./skeletons/UserSkeleton";
 
 const FollowList = ({
   count,
@@ -120,7 +121,9 @@ const FollowList = ({
           }`}
         >
           {" "}
-          <p className="text-xl md:text-2xl font-medium">{count}</p>
+          <p className="text-xl md:text-2xl font-medium">
+            {abbreviateNumber(count)}
+          </p>
           <p className="text-normal text-sm">
             {" "}
             {fetchFollowing ? "Following" : "Followers"}
@@ -128,7 +131,9 @@ const FollowList = ({
         </button>
       ) : (
         <div className="flex flex-col text-center items-center">
-          <p className="text-xl md:text-2xl font-medium">{count}</p>
+          <p className="text-xl md:text-2xl font-medium">
+            {abbreviateNumber(count)}
+          </p>
           <p className="text-normal text-sm">
             {" "}
             {fetchFollowing ? "Following" : "Followers"}
@@ -149,7 +154,7 @@ const FollowList = ({
               disabled={requestLoading}
               onClick={closeModal}
               title="Close modal"
-              className="rounded-full cursor-pointer hover:text-primary-hover transition text-white"
+              className="rounded-full cursor-pointer hover:text-primary-hover transition text-text-primary"
             >
               <RxCross2 className="text-2xl" />
             </button>

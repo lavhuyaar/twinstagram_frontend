@@ -11,6 +11,7 @@ import CommentReply from "./CommentReply";
 import CommentInput from "./CommentInput";
 import { type IComment } from "../interfaces";
 import timeAgo from "../utils/timeAgo";
+import { abbreviateNumber } from "../utils/abbreviateNumber";
 
 interface ICommentProps extends IComment {
   deleteComment: (id: string) => void;
@@ -191,7 +192,7 @@ const Comment = ({
                 {!repliesVisible ? (
                   <>
                     <MdKeyboardArrowDown className="text-2xl" /> View{" "}
-                    {repliesCount} {repliesCount > 1 ? "replies" : "reply"}
+                    {abbreviateNumber(repliesCount)} {repliesCount > 1 ? "replies" : "reply"}
                   </>
                 ) : (
                   <>

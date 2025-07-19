@@ -6,9 +6,10 @@ import ProfilePosts from "../sections/ProfilePosts";
 import FollowList from "../components/FollowList";
 import ProfileSkeleton from "../components/skeletons/ProfileSkeleton";
 import Error from "../components/Error";
-import type { IUser } from "../interfaces";
 import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
+import { abbreviateNumber } from "../utils/abbreviateNumber";
+import type { IUser } from "../interfaces";
 
 type Following = "TRUE" | "FALSE" | "PENDING";
 
@@ -150,7 +151,7 @@ const UserProfile = () => {
                     <div className="flex items-center gap-4 md:gap-12">
                       <div className="flex flex-col text-center items-center">
                         <p className="text-xl md:text-2xl font-medium">
-                          {profile?._count?.posts}
+                          {abbreviateNumber(profile?._count?.posts)}
                         </p>
                         <p className="text-normal text-sm">Posts</p>
                       </div>

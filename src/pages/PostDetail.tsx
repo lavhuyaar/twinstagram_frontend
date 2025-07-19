@@ -7,11 +7,12 @@ import useAuth from "../hooks/useAuth";
 import MainLayout from "../components/MainLayout";
 import CommentsSection from "../sections/CommentsSection";
 import Error from "../components/Error";
+import PostDetailSkeleton from "../components/skeletons/PostDetailSkeleton";
 import { handleAxiosError } from "../utils/handleAxiosError";
 import { axiosInstance } from "../api/axiosInstance";
-import type { IPost } from "../interfaces";
-import PostDetailSkeleton from "../components/skeletons/PostDetailSkeleton";
 import timeAgo from "../utils/timeAgo";
+import { abbreviateNumber } from "../utils/abbreviateNumber";
+import type { IPost } from "../interfaces";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -137,7 +138,7 @@ const PostDetail = () => {
                         : "fill-text-primary hover:fill-primary-hover"
                     } transition`}
                   />{" "}
-                  {post?._count?.likes}{" "}
+                  {abbreviateNumber(post?._count?.likes)}{" "}
                   {post?._count?.likes && post?._count?.likes === 1
                     ? "Like"
                     : post?._count?.likes && post?._count?.likes > 1
@@ -149,7 +150,9 @@ const PostDetail = () => {
                   className="border-none bg-none cursor-pointer flex items-center gap-1"
                 >
                   <MdOutlineInsertComment className="text-2xl" />{" "}
-                  {post && post?._count?.comments + post?._count?.subComments}
+                  {abbreviateNumber(
+                    post && post?._count?.comments + post?._count?.subComments
+                  )}
                 </button>
               </section>
             </section>

@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router";
 import { IoMdHeart } from "react-icons/io";
 import { MdOutlineInsertComment } from "react-icons/md";
 import useAuth from "../hooks/useAuth";
-import type { IPost } from "../interfaces";
 import timeAgo from "../utils/timeAgo";
+import { abbreviateNumber } from "../utils/abbreviateNumber";
+import type { IPost } from "../interfaces";
 
 const Post = memo(
   ({
@@ -45,9 +46,7 @@ const Post = memo(
             <div>
               <div className="w-full flex items-center gap-3">
                 <p className="font-medium">{user?.username}</p>{" "}
-                <p className="text-text-muted text-xs">
-                  {timeAgo(createdAt)}
-                </p>
+                <p className="text-text-muted text-xs">{timeAgo(createdAt)}</p>
                 {createdAt !== updatedAt && (
                   <p className="text-text-muted text-xs">
                     (edited {timeAgo(updatedAt)})
@@ -82,11 +81,11 @@ const Post = memo(
                   thisPostLiked ? "fill-primary" : "fill-text-primary"
                 } transition`}
               />{" "}
-              {_count?.likes}
+              {abbreviateNumber(_count?.likes)}
             </span>
             <span className="border-none bg-none p-4 flex items-center gap-1">
               <MdOutlineInsertComment className="text-2xl" />{" "}
-              {_count?.comments + _count?.subComments}
+              {abbreviateNumber(_count?.comments + _count?.subComments)}
             </span>
           </div>
         </div>
