@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router";
-import timeAgo from "../utils/timeAgo";
-import type { ICommentReply } from "../interfaces";
+import { SlOptionsVertical } from "react-icons/sl";
 import useOutsideClick from "../hooks/useOutsideClick";
 import useAuth from "../hooks/useAuth";
-import { SlOptionsVertical } from "react-icons/sl";
+import Modal from "./Modal";
 import CommentInput from "./CommentInput";
 import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
-import CustomModal from "./CustomModal";
+import timeAgo from "../utils/timeAgo";
+import type { ICommentReply } from "../interfaces";
 
 const CommentReply = ({
   reply,
@@ -134,15 +134,29 @@ const CommentReply = ({
         )}
       </div>
       {isDeleteModalOpen && (
-        <CustomModal
-          isOpen={isDeleteModalOpen}
-          loading={loading}
-          openModal={openDeleteModal}
-          closeModal={closeDeleteModal}
-          onClick={onDelete}
-          textMessage="Are you sure you want to delete this comment?"
-          taskMessage="Delete"
-        />
+        <Modal>
+          <p>Are you sure you want to delete this comment?</p>
+          <div className="flex gap-4 mt-4 justify-center items-center">
+            <button
+              onClick={closeDeleteModal}
+              disabled={loading}
+              className={`${
+                loading ? "" : "hover:bg-primary-hover"
+              } cursor-pointer px-4 py-2 bg-primary/40  transition text-primary-txt font-semibold`}
+            >
+              Close
+            </button>
+            <button
+              onClick={onDelete}
+              disabled={loading}
+              className={`${
+                loading ? "bg-primary/40" : "bg-primary hover:bg-primary-hover"
+              } cursor-pointer px-4 py-2   transition text-primary-txt font-semibold`}
+            >
+              Delete
+            </button>
+          </div>
+        </Modal>
       )}
     </>
   );

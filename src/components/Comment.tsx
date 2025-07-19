@@ -2,15 +2,15 @@ import { useRef, useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Link } from "react-router";
+import useOutsideClick from "../hooks/useOutsideClick";
+import useAuth from "../hooks/useAuth";
+import useCommentReply from "../hooks/useCommentReply";
+import Modal from "./Modal";
 import CommentSkeleton from "./skeletons/CommentSkeleton";
 import CommentInput from "./CommentInput";
 import { type IComment } from "../interfaces";
 import timeAgo from "../utils/timeAgo";
-import useAuth from "../hooks/useAuth";
-import useCommentReply from "../hooks/useCommentReply";
 import CommentReply from "./CommentReply";
-import useOutsideClick from "../hooks/useOutsideClick";
-import CustomModal from "./CustomModal";
 
 interface ICommentProps extends IComment {
   deleteComment: (id: string) => void;
@@ -84,15 +84,31 @@ const Comment = ({
   return (
     <>
       {isDeleteModalOpen && (
-        <CustomModal
-          isOpen={isDeleteModalOpen}
-          openModal={openDeleteModal}
-          loading={isDeleting}
-          closeModal={closeDeleteModal}
-          onClick={onDelete}
-          textMessage="Are you sure you want to delete this comment?"
-          taskMessage="Delete"
-        />
+        <Modal>
+          <p>Are you sure you want to delete this comment?</p>
+          <div className="flex gap-4 mt-4 justify-center items-center">
+            <button
+              onClick={closeDeleteModal}
+              disabled={isDeleting}
+              className={`${
+                isDeleting ? "" : "hover:bg-primary-hover"
+              } cursor-pointer px-4 py-2 bg-primary/40  transition text-primary-txt font-semibold`}
+            >
+              Close
+            </button>
+            <button
+              onClick={onDelete}
+              disabled={isDeleting}
+              className={`${
+                isDeleting
+                  ? "bg-primary/40"
+                  : "bg-primary hover:bg-primary-hover"
+              } cursor-pointer px-4 py-2   transition text-primary-txt font-semibold`}
+            >
+              Delete
+            </button>
+          </div>
+        </Modal>
       )}
 
       <div className="flex items-center gap-2 md:gap-4 w-full">
