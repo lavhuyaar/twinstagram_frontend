@@ -7,9 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
 
-import Header from "../components/Header";
 import CustomInput from "../components/CustomInput";
-import Footer from "../components/Footer";
 import { registerSchema } from "../validators/registerSchema";
 
 interface IRegisterFormValues {
@@ -49,7 +47,6 @@ const Register = () => {
 
   return (
     <>
-      <Header />
       <main className="p-6 sm:px-[5%] py-10 gap-5 items-center justify-center text-text-primary">
         <h1 className="text-[26px] text-center font-semibold">
           Register @Yappin
@@ -119,8 +116,6 @@ const Register = () => {
           </NavLink>
         </p>
       </main>
-
-      <Footer />
     </>
   );
 };

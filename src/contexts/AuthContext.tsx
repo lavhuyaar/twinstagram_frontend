@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
         onClose: () => (window.location.href = "/"),
       });
     } catch (error) {
-      handleAxiosError(error);
+      handleAxiosError(error, "Failed to login user!");
     } finally {
       setLoading(false);
     }
