@@ -18,7 +18,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userData) {
-      window.location.href = "/feed";
+      window.location.href = "/";
     }
   }, [userData]);
 

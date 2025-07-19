@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children?: React.ReactNode }) => {
       toast.dismiss();
       toast.success("User logged in successfully!", {
         autoClose: 2000,
-        onClose: () => (window.location.href = "/feed"),
+        onClose: () => (window.location.href = "/"),
       });
     } catch (error) {
       handleAxiosError(error);

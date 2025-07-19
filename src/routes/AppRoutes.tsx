@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router";
 import { Flip, ToastContainer } from "react-toastify";
 import useTheme from "../hooks/useTheme";
-import Home from "../pages/Home";
 import PageNotFound from "../pages/PageNotFound";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -16,11 +15,10 @@ const AppRoutes = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Feed />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/feed" element={<Feed />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/p/:postId" element={<PostDetail />} />
         <Route path="/post/new" element={<AddPost />} />

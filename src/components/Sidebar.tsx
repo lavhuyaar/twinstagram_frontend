@@ -19,7 +19,7 @@ const Sidebar = ({ className }: { className?: string }) => {
 
   const links: ILink[] = [
     {
-      path: "/feed",
+      path: "/",
       text: "My Feed",
       icon: <IoHomeSharp className="text-xl" />,
     },
@@ -49,7 +49,7 @@ const Sidebar = ({ className }: { className?: string }) => {
   return (
     <>
       <aside className={`${className || ""}`}>
-        <Link to="/feed" className="pl-3">
+        <Link to="/" className="pl-3">
           <img
             src="/logo.png"
             alt="Twinstagram"
