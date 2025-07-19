@@ -64,7 +64,7 @@ const Login = () => {
                 register={register}
                 name="username"
                 placeholder="Example: johndoe123"
-                labelText="Your Username:"
+                labelText="Your Username"
                 type="text"
                 errorMessage={errors.username?.message}
               />
@@ -72,7 +72,7 @@ const Login = () => {
                 register={register}
                 name="password"
                 placeholder="Example: 123456"
-                labelText="Your Password:"
+                labelText="Your Password"
                 type="password"
                 errorMessage={errors.password?.message}
               />
@@ -101,7 +101,7 @@ const Login = () => {
               </button>
             </form>
 
-            <p>
+            <p className="mt-2">
               {"Don't have an account? "}
               <NavLink
                 to="/auth/register"

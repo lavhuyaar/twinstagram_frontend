@@ -47,20 +47,18 @@ const Register = () => {
 
   return (
     <>
-      <main className="p-6 sm:px-[5%] py-10 gap-5 items-center justify-center text-text-primary">
-        <h1 className="text-[26px] text-center font-semibold">
-          Register @Yappin
-        </h1>
+      <main className="p-6 sm:px-[5%] py-10 gap-2 items-center justify-center h-screen w-full flex flex-col max-w-[1800px]">
+        <img src="/logo.png" alt="" className="w-[220px] sm:w-[300px]" />
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-3 bg-surface p-5 sm:p-8 w-full sm:w-[500px] rounded-lg drop-shadow-[4px, 0px, 4px] drop-shadow-primary"
+          className="flex flex-col gap-3 bg-surface p-5 sm:p-8 w-full sm:w-[500px] drop-shadow-[4px, 0px, 4px] drop-shadow-primary"
         >
           <CustomInput
             register={register}
             name="firstName"
             placeholder="Example: John"
-            labelText="First Name:"
+            labelText="First Name"
             type="text"
             errorMessage={errors.firstName?.message}
           />
@@ -68,7 +66,7 @@ const Register = () => {
             register={register}
             name="lastName"
             placeholder="Example: Doe"
-            labelText="Last Name:"
+            labelText="Last Name"
             type="text"
             errorMessage={errors.lastName?.message}
           />
@@ -76,7 +74,7 @@ const Register = () => {
             register={register}
             name="username"
             placeholder="Example: johndoe123"
-            labelText="Username (must be unique):"
+            labelText="Username (must be unique)"
             type="text"
             errorMessage={errors.username?.message}
           />
@@ -84,7 +82,7 @@ const Register = () => {
             register={register}
             name="password"
             placeholder="Example: 123456"
-            labelText="Password:"
+            labelText="Password"
             type="password"
             errorMessage={errors.password?.message}
           />
@@ -93,7 +91,7 @@ const Register = () => {
             register={register}
             name="confirm_password"
             placeholder="Re-enter password"
-            labelText="Re-enter the password:"
+            labelText="Re-enter the password"
             type="password"
             errorMessage={errors.confirm_password?.message}
           />
@@ -101,12 +99,12 @@ const Register = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-2 text-md font-semibold cursor-pointer text-primary-txt  bg-primary px-4 py-2 rounded-lg hover:bg-primary-hover transition"
+            className="mt-2 text-md cursor-pointer font-semibold text-primary-txt bg-primary px-4 py-2 hover:bg-primary-hover transition"
           >
             Create new profile
           </button>
         </form>
-        <p>
+        <p className="mt-2">
           Already have an account?{" "}
           <NavLink
             to="/auth/login"
