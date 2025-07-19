@@ -44,9 +44,9 @@ const Post = memo(
                 {content}
               </pre>
               <img
-                src={image}
+                src={image ?? '/image-placeholder.jpg'}
                 alt=""
-                className=" object-contain object-center bg-white mt-4 w-full max-w-[600px]"
+                className=" object-contain object-center bg-white mt-2 md:mt-4 w-full max-w-[600px]"
               />
             </div>
           ) : (

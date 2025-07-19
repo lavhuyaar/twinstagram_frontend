@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MdOutlinePhotoCamera } from "react-icons/md";
 import type { IPost } from "../interfaces";
 import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
@@ -77,7 +78,18 @@ const ProfilePosts = ({
   return (
     <>
       <section className="flex gap-5 flex-wrap mx-auto justify-center justify-self-center my-6">
-        {posts && posts.map((post) => <Post {...post} key={post?.id} />)}
+        {posts && posts.length > 0 ? (
+          posts.map((post) => <Post {...post} key={post?.id} />)
+        ) : (
+          <div className="items-center flex flex-col text-center">
+            <div className="flex items-center justify-center rounded-full border-2 p-6 size-[100px] shrink-0 border-text-muted">
+              <MdOutlinePhotoCamera className="text-5xl text-text-muted" />
+            </div>
+            <h4 className="text-2xl text-text-secondary font-semibold mt-6">
+              No posts yet
+            </h4>
+          </div>
+        )}
       </section>
     </>
   );

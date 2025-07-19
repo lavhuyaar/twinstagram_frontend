@@ -51,3 +51,16 @@ export interface ICommentReply {
   user?: IUser;
   parentCommentId: string;
 }
+
+export interface IRequestUser extends IUser {
+  followers: {
+    id: string;
+    isFollowing: "TRUE" | "PENDING" | "FALSE";
+  }[];
+}
+
+export interface IFollowUser {
+  id: string;
+  requestBy?: IRequestUser;
+  requestTo?: IRequestUser;
+}

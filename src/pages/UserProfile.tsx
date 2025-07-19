@@ -3,11 +3,12 @@ import { NavLink, useParams } from "react-router";
 import useAuth from "../hooks/useAuth";
 import MainLayout from "../components/MainLayout";
 import ProfilePosts from "../sections/ProfilePosts";
+import FollowList from "../components/FollowList";
+import ProfileSkeleton from "../components/skeletons/ProfileSkeleton";
 import Error from "../components/Error";
 import type { IUser } from "../interfaces";
 import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
-import ProfileSkeleton from "../components/skeletons/ProfileSkeleton";
 
 type Following = "TRUE" | "FALSE" | "PENDING";
 
@@ -54,12 +55,28 @@ const UserProfile = () => {
   };
 
   // Sends follow request
-  const createFollowRequest = async () => {
-    if (isMyProfile || !profile) return;
+  const createFollowRequest = async (id?: string) => {
+    if (!id) return;
     setSendingRequest(true);
     try {
-      await axiosInstance.post(`/follow/new/${profile.id}`);
-      getProfile(profile?.id);
+      await axiosInstance.post(`/follow/new/${id}`); //Creates new request
+
+      //Updates profile
+      const response = await axiosInstance.get(`/profile/${id}`);
+      const { profile, isFollowing, followRequestId, type } = response.data;
+
+      // Basic profile stats are visible to everyone
+      setProfile(profile);
+
+      // If user is following the profile
+      setIsFollowing(isFollowing);
+
+      setFollowRequestId(followRequestId);
+
+      // Ensures that posts are only visible to user, his followers, and to everyone if his account is public
+      if (isMyProfile || type === "PUBLIC" || isFollowing === "TRUE") {
+        setPostsVisible(true);
+      } else setPostsVisible(false);
     } catch (err) {
       handleAxiosError(err);
     } finally {
@@ -68,12 +85,31 @@ const UserProfile = () => {
   };
 
   // Deletes follow request
-  const deleteFollowRequest = async () => {
-    if (isMyProfile || !profile || !followRequestId) return;
+  const deleteFollowRequest = async (
+    id?: string,
+    requestId?: string | null
+  ) => {
+    if (!id || !requestId) return;
     setSendingRequest(true);
     try {
-      await axiosInstance.delete(`/follow/${followRequestId}`);
-      getProfile(profile.id);
+      await axiosInstance.delete(`/follow/${requestId}`);
+
+      //Updates profile
+      const response = await axiosInstance.get(`/profile/${id}`);
+      const { profile, isFollowing, followRequestId, type } = response.data;
+
+      // Basic profile stats are visible to everyone
+      setProfile(profile);
+
+      // If user is following the profile
+      setIsFollowing(isFollowing);
+
+      setFollowRequestId(followRequestId);
+
+      // Ensures that posts are only visible to user, his followers, and to everyone if his account is public
+      if (isMyProfile || type === "PUBLIC" || isFollowing === "TRUE") {
+        setPostsVisible(true);
+      } else setPostsVisible(false);
     } catch (err) {
       handleAxiosError(err);
     } finally {
@@ -87,6 +123,7 @@ const UserProfile = () => {
     getProfile(userId);
   }, [userId]);
 
+  // Error page
   if (error) {
     return <Error error={error} onRetry={() => getProfile(userId)} />;
   }
@@ -119,42 +156,23 @@ const UserProfile = () => {
                       </div>
 
                       {/* Gives permission to see followers and following of Profile (user) */}
-                      {postsVisible ? (
-                        <>
-                          <NavLink
-                            to={`/followers/${profile?.id}`}
-                            className="flex flex-col text-center items-center hover:text-primary-hover transition"
-                          >
-                            <p className="text-xl md:text-2xl font-medium">
-                              {profile?._count?.followers}
-                            </p>
-                            <p className="text-normal text-sm">Followers</p>
-                          </NavLink>
-                          <NavLink
-                            to={`/following/${profile?.id}`}
-                            className="flex flex-col text-center items-center hover:text-primary-hover transition"
-                          >
-                            <p className="text-xl md:text-2xl font-medium">
-                              {profile?._count?.following}
-                            </p>
-                            <p className="text-normal text-sm">Following</p>
-                          </NavLink>
-                        </>
-                      ) : (
-                        <>
-                          <div className="flex flex-col text-center items-center">
-                            <p className="text-xl md:text-2xl font-medium">
-                              {profile?._count?.followers}
-                            </p>
-                            <p className="text-normal text-sm">Followers</p>
-                          </div>
-                          <div className="flex flex-col text-center items-center">
-                            <p className="text-xl md:text-2xl font-medium">
-                              {profile?._count?.following}
-                            </p>
-                            <p className="text-normal text-sm">Following</p>
-                          </div>
-                        </>
+                      {typeof profile?._count?.followers === "number" && (
+                        <FollowList
+                          permitToView={postsVisible}
+                          profileId={profile.id}
+                          count={profile._count.followers}
+                          fetchFollowing={false}
+                          disabled={sendingRequest}
+                        />
+                      )}
+                      {typeof profile?._count?.following === "number" && (
+                        <FollowList
+                          permitToView={postsVisible}
+                          profileId={profile.id}
+                          count={profile._count.following}
+                          fetchFollowing={true}
+                          disabled={sendingRequest}
+                        />
                       )}
                     </div>
                     {isMyProfile === true ? (
@@ -169,8 +187,12 @@ const UserProfile = () => {
                         disabled={sendingRequest}
                         onClick={
                           isFollowing === "TRUE" || isFollowing === "PENDING"
-                            ? deleteFollowRequest
-                            : createFollowRequest
+                            ? () =>
+                                deleteFollowRequest(
+                                  profile?.id,
+                                  followRequestId
+                                )
+                            : () => createFollowRequest(profile?.id)
                         }
                         className={`"w-full px-4 py-1 text-center ${
                           isFollowing === "TRUE" || isFollowing === "PENDING"
