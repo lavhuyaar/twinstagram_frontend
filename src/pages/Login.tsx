@@ -30,7 +30,10 @@ const Login = () => {
     loginUser(values);
 
   const guestLogin = () =>
-    loginUser({ username: "guestuser", password: "123456" });
+    loginUser({
+      username: import.meta.env.VITE_GUEST_USERNAME,
+      password: import.meta.env.VITE_GUEST_PASSWORD,
+    });
 
   return (
     <>
