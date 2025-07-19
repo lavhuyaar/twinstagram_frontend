@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router";
-import { MdLogout, MdOutlinePending } from "react-icons/md";
+import { MdLogout, MdOutlineAddBox, MdOutlinePending } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import {
   IoHomeSharp,
@@ -33,6 +33,11 @@ const Sidebar = ({ className }: { className?: string }) => {
       path: "/feedadadadad",
       text: "Find More People",
       icon: <IoPeopleOutline className="text-xl" />,
+    },
+    {
+      path: "/post/new",
+      text: "Create New",
+      icon: <MdOutlineAddBox className="text-xl" />,
     },
     {
       path: `/u/${userData?.id}`,
