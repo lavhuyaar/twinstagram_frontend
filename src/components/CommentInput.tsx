@@ -75,6 +75,7 @@ const CommentInput = ({
             `/comments/sub/${commentId}`,
             {
               content: value,
+              postId,
             }
           );
 

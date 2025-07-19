@@ -7,10 +7,10 @@ import useAuth from "../hooks/useAuth";
 import useCommentReply from "../hooks/useCommentReply";
 import Modal from "./Modal";
 import CommentSkeleton from "./skeletons/CommentSkeleton";
+import CommentReply from "./CommentReply";
 import CommentInput from "./CommentInput";
 import { type IComment } from "../interfaces";
 import timeAgo from "../utils/timeAgo";
-import CommentReply from "./CommentReply";
 
 interface ICommentProps extends IComment {
   deleteComment: (id: string) => void;

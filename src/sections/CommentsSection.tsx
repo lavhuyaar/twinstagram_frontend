@@ -19,7 +19,6 @@ const CommentsSection = ({ postId }: { postId?: string }) => {
     try {
       const response = await axiosInstance.get(`/comments/post/${postId}`);
       setComments(response.data?.comments);
-      console.log(response.data?.comments);
     } catch (err) {
       handleAxiosError(err, "Failed to fetch Comments!", setError, true);
     } finally {

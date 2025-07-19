@@ -61,9 +61,11 @@ const AddPost = () => {
       if (image) {
         formValues.append("image", image);
       }
-      await axiosInstance.post("/posts/new", formValues);
+      const response = await axiosInstance.post("/posts/new", formValues);
+      const { post } = response.data;
       toast.dismiss();
       toast.success("Post created successfully!", { autoClose: 4000 });
+      navigate(`/p/${post?.id}`, { replace: true });
     } catch (error) {
       handleAxiosError(error, "Failed to update profile!");
     } finally {

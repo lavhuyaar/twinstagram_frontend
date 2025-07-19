@@ -2,11 +2,22 @@ import { memo } from "react";
 import { Link, useNavigate } from "react-router";
 import { IoMdHeart } from "react-icons/io";
 import { MdOutlineInsertComment } from "react-icons/md";
-import type { IPost } from "../interfaces";
 import useAuth from "../hooks/useAuth";
+import type { IPost } from "../interfaces";
+import timeAgo from "../utils/timeAgo";
 
 const Post = memo(
-  ({ id, content, userId, user, image, _count, likes }: IPost) => {
+  ({
+    id,
+    content,
+    userId,
+    user,
+    image,
+    _count,
+    likes,
+    createdAt,
+    updatedAt,
+  }: IPost) => {
     const navigate = useNavigate();
     const { userData } = useAuth();
 
@@ -32,7 +43,17 @@ const Post = memo(
               className="shrink-0 size-[40px] rounded-full object-center object-cover"
             />
             <div>
-              <p className="font-medium">{user?.username}</p>
+              <div className="w-full flex items-center gap-3">
+                <p className="font-medium">{user?.username}</p>{" "}
+                <p className="text-text-muted text-xs">
+                  {timeAgo(createdAt)}
+                </p>
+                {createdAt !== updatedAt && (
+                  <p className="text-text-muted text-xs">
+                    (edited {timeAgo(updatedAt)})
+                  </p>
+                )}
+              </div>
               <p className="text-text-muted text-[11px]">
                 {user?.firstName} {user?.lastName}
               </p>
@@ -44,7 +65,7 @@ const Post = memo(
                 {content}
               </pre>
               <img
-                src={image ?? '/image-placeholder.jpg'}
+                src={image ?? "/image-placeholder.jpg"}
                 alt=""
                 className=" object-contain object-center bg-white mt-2 md:mt-4 w-full max-w-[600px]"
               />
@@ -64,7 +85,8 @@ const Post = memo(
               {_count?.likes}
             </span>
             <span className="border-none bg-none p-4 flex items-center gap-1">
-              <MdOutlineInsertComment className="text-2xl" /> {_count?.comments}
+              <MdOutlineInsertComment className="text-2xl" />{" "}
+              {_count?.comments + _count?.subComments}
             </span>
           </div>
         </div>

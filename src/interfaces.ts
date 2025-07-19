@@ -22,9 +22,10 @@ export interface IPost {
   _count: {
     likes: number;
     comments: number;
+    subComments: number;
   };
   createdAt: string;
-  upatedAt: string;
+  updatedAt: string;
 }
 
 export interface IComment {

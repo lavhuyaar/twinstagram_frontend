@@ -11,6 +11,7 @@ import { handleAxiosError } from "../utils/handleAxiosError";
 import { axiosInstance } from "../api/axiosInstance";
 import type { IPost } from "../interfaces";
 import PostDetailSkeleton from "../components/skeletons/PostDetailSkeleton";
+import timeAgo from "../utils/timeAgo";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -84,12 +85,26 @@ const PostDetail = () => {
                   className="shrink-0 size-[40px] rounded-full object-center object-cover"
                 />
                 <div>
-                  <Link
-                    to={`/u/${post?.userId}`}
-                    className="font-medium text-lg hover:text-primary transition"
-                  >
-                    {post?.user?.username}
-                  </Link>
+                  <div className="w-full flex items-center gap-3">
+                    <Link
+                      to={`/u/${post?.userId}`}
+                      className="font-medium text-lg hover:text-primary transition"
+                    >
+                      {post?.user?.username}
+                    </Link>
+                    {post && (
+                      <>
+                        <p className="text-text-muted text-xs">
+                          {timeAgo(post?.createdAt)}
+                        </p>
+                        {post?.createdAt !== post?.updatedAt && (
+                          <p className="text-text-muted text-xs">
+                            (edited {timeAgo(post?.updatedAt)})
+                          </p>
+                        )}
+                      </>
+                    )}
+                  </div>
                   <h4 className="text-text-muted text-xs">
                     {post?.user?.firstName} {post?.user?.lastName}
                   </h4>
@@ -134,7 +149,7 @@ const PostDetail = () => {
                   className="border-none bg-none cursor-pointer flex items-center gap-1"
                 >
                   <MdOutlineInsertComment className="text-2xl" />{" "}
-                  {post?._count?.comments}
+                  {post && post?._count?.comments + post?._count?.subComments}
                 </button>
               </section>
             </section>
