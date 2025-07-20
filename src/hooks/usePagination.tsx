@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import useAuth from "./useAuth";
 import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
 
@@ -23,6 +24,8 @@ const usePagination = <T,>({
 
   const initialFetch = useRef(false);
 
+  const { userData } = useAuth();
+
   const fetchData = async (page: number) => {
     setIsFetching(true);
     try {
@@ -40,13 +43,13 @@ const usePagination = <T,>({
   };
 
   useEffect(() => {
-    if (!currentPage) return;
+    if (!currentPage || !userData) return;
 
     if (initialFetch.current) return;
     initialFetch.current = true;
 
     fetchData(currentPage);
-  }, [currentPage]);
+  }, [currentPage, userData]);
 
   const fetchMore = () => {
     if (!hasMore) return;

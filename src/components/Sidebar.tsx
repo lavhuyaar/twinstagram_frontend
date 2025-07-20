@@ -6,6 +6,7 @@ import {
   IoPeopleOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
+import { IoIosSend } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
 
 interface ILink {
@@ -28,6 +29,11 @@ const Sidebar = ({ className }: { className?: string }) => {
       path: "/pending-requests",
       text: "Pending Requests",
       icon: <MdOutlinePending className="text-xl" />,
+    },
+    {
+      path: "/sent-requests",
+      text: "Sent Requests",
+      icon: <IoIosSend className="text-xl" />,
     },
     {
       path: "/feedadadadad",

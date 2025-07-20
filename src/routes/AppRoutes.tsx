@@ -10,6 +10,7 @@ import PostDetail from "../pages/PostDetail";
 import AddPost from "../pages/AddPost";
 import UserProfile from "../pages/UserProfile";
 import PendingRequests from "../pages/PendingRequests";
+import SentRequests from "../pages/SentRequests";
 
 const AppRoutes = () => {
   const { theme } = useTheme();
@@ -25,6 +26,7 @@ const AppRoutes = () => {
         <Route path="/post/new" element={<AddPost />} />
         <Route path="/u/:userId" element={<UserProfile />} />
         <Route path="/pending-requests" element={<PendingRequests />} />
+        <Route path="/sent-requests" element={<SentRequests />} />
       </Routes>
       <ToastContainer
         autoClose={1000}
