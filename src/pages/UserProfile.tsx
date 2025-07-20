@@ -10,6 +10,7 @@ import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
 import { abbreviateNumber } from "../utils/abbreviateNumber";
 import type { IUser } from "../interfaces";
+import { FOLLOWING_STATUS, PROFILE_TYPE } from "../constants/constants";
 
 type Following = "TRUE" | "FALSE" | "PENDING";
 
@@ -19,7 +20,9 @@ const UserProfile = () => {
   const [postsVisible, setPostsVisible] = useState<boolean | undefined>(
     undefined
   );
-  const [isFollowing, setIsFollowing] = useState<Following>("FALSE");
+  const [isFollowing, setIsFollowing] = useState<Following>(
+    FOLLOWING_STATUS.FALSE
+  );
   const [followRequestId, setFollowRequestId] = useState<string | null>(null);
   const [sendingRequest, setSendingRequest] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>(undefined);
@@ -45,7 +48,7 @@ const UserProfile = () => {
       setFollowRequestId(followRequestId);
 
       // Ensures that posts are only visible to user, his followers, and to everyone if his account is public
-      if (isMyProfile || type === "PUBLIC" || isFollowing === "TRUE") {
+      if (isMyProfile || type === PROFILE_TYPE.PUBLIC || isFollowing === FOLLOWING_STATUS.TRUE) {
         setPostsVisible(true);
       } else setPostsVisible(false);
     } catch (err) {
@@ -75,7 +78,11 @@ const UserProfile = () => {
       setFollowRequestId(followRequestId);
 
       // Ensures that posts are only visible to user, his followers, and to everyone if his account is public
-      if (isMyProfile || type === "PUBLIC" || isFollowing === "TRUE") {
+      if (
+        isMyProfile ||
+        type === PROFILE_TYPE.PUBLIC ||
+        isFollowing === FOLLOWING_STATUS.TRUE
+      ) {
         setPostsVisible(true);
       } else setPostsVisible(false);
     } catch (err) {
@@ -108,7 +115,7 @@ const UserProfile = () => {
       setFollowRequestId(followRequestId);
 
       // Ensures that posts are only visible to user, his followers, and to everyone if his account is public
-      if (isMyProfile || type === "PUBLIC" || isFollowing === "TRUE") {
+      if (isMyProfile || type === PROFILE_TYPE.PUBLIC || isFollowing === FOLLOWING_STATUS.TRUE) {
         setPostsVisible(true);
       } else setPostsVisible(false);
     } catch (err) {
@@ -187,7 +194,8 @@ const UserProfile = () => {
                       <button
                         disabled={sendingRequest}
                         onClick={
-                          isFollowing === "TRUE" || isFollowing === "PENDING"
+                          isFollowing === FOLLOWING_STATUS.TRUE ||
+                          isFollowing === FOLLOWING_STATUS.PENDING
                             ? () =>
                                 deleteFollowRequest(
                                   profile?.id,
@@ -196,14 +204,15 @@ const UserProfile = () => {
                             : () => createFollowRequest(profile?.id)
                         }
                         className={`"w-full px-4 py-1 text-center ${
-                          isFollowing === "TRUE" || isFollowing === "PENDING"
+                          isFollowing === FOLLOWING_STATUS.TRUE ||
+                          isFollowing === FOLLOWING_STATUS.PENDING
                             ? "border-2 border-text-primary hover:bg-primary-hover/30 text-text-primary"
                             : "bg-primary border-2 text-primary-txt border-primary hover:bg-primary-hover hover:border-primary-hover"
                         } rounded-md transition cursor-pointer font-semibold`}
                       >
-                        {isFollowing === "TRUE"
+                        {isFollowing === FOLLOWING_STATUS.TRUE
                           ? "Unfollow"
-                          : isFollowing === "FALSE"
+                          : isFollowing === FOLLOWING_STATUS.FALSE
                           ? "Follow"
                           : "Request Sent"}
                       </button>

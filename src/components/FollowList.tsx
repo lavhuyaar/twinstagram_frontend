@@ -8,6 +8,7 @@ import { axiosInstance } from "../api/axiosInstance";
 import { handleAxiosError } from "../utils/handleAxiosError";
 import { abbreviateNumber } from "../utils/abbreviateNumber";
 import type { IFollowUser } from "../interfaces";
+import { FOLLOWING_STATUS } from "../constants/constants";
 
 const FollowList = ({
   count,
@@ -229,10 +230,10 @@ const FollowList = ({
                                 className={`rounded-md ml-auto text-[14px] sm:text-[16px] transition cursor-pointer font-semibold border-1 border-text-primary hover:bg-primary-hover/30 text-text-primary px-2 py-1`}
                               >
                                 {user[requestUserKey]?.followers[0]
-                                  .isFollowing === "TRUE"
+                                  .isFollowing === FOLLOWING_STATUS.TRUE
                                   ? "Unfollow"
                                   : user[requestUserKey]?.followers[0]
-                                      .isFollowing === "PENDING"
+                                      .isFollowing === FOLLOWING_STATUS.PENDING
                                   ? "Request sent"
                                   : ""}
                               </button>

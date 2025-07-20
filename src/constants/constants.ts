@@ -2,3 +2,13 @@ export const PROFILE_TYPE = {
   PRIVATE: "PRIVATE",
   PUBLIC: "PUBLIC",
 };
+
+export const FOLLOWING_STATUS: {
+  TRUE: "TRUE";
+  PENDING: "PENDING";
+  FALSE: "FALSE";
+} = {
+  TRUE: "TRUE",
+  PENDING: "PENDING",
+  FALSE: "FALSE",
+};
