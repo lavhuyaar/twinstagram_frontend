@@ -9,6 +9,7 @@ import Settings from "../pages/Settings";
 import PostDetail from "../pages/PostDetail";
 import AddPost from "../pages/AddPost";
 import UserProfile from "../pages/UserProfile";
+import PendingRequests from "../pages/PendingRequests";
 
 const AppRoutes = () => {
   const { theme } = useTheme();
@@ -23,12 +24,13 @@ const AppRoutes = () => {
         <Route path="/p/:postId" element={<PostDetail />} />
         <Route path="/post/new" element={<AddPost />} />
         <Route path="/u/:userId" element={<UserProfile />} />
+        <Route path="/pending-requests" element={<PendingRequests />} />
       </Routes>
       <ToastContainer
         autoClose={1000}
         hideProgressBar
         theme={theme}
-        style={{zIndex: 999999}}
+        style={{ zIndex: 999999 }}
         transition={Flip}
         position="top-center"
       />

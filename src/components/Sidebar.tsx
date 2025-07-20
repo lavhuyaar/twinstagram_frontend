@@ -25,7 +25,7 @@ const Sidebar = ({ className }: { className?: string }) => {
     },
 
     {
-      path: "/fddadada",
+      path: "/pending-requests",
       text: "Pending Requests",
       icon: <MdOutlinePending className="text-xl" />,
     },
