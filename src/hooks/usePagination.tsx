@@ -30,6 +30,7 @@ const usePagination = <T,>({
         `${endpoint}?limit=${limit}&page=${page}`
       );
       setData((prev) => [...prev, ...response.data[dataKey]]);
+      // setData([])
       setHasMore(response.data[dataKey].length >= limit);
     } catch (err) {
       handleAxiosError(err, undefined, setError, true);

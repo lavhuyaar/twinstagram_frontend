@@ -28,17 +28,27 @@ const Feed = () => {
         </div>
 
         <section className="flex gap-5 flex-wrap mx-auto justify-center justify-self-center my-12">
-          {posts.map((post) => (
-            <Post {...post} key={post?.id} />
-          ))}
+          {posts.length > 0 ? (
+            posts.map((post) => <Post {...post} key={post?.id} />)
+          ) : (
+            <div className="p-3 w-full text-lg font-medium text-center flex items-center justify-center min-h-[60vh]">
+              No posts are available in your feed :(
+            </div>
+          )}
           {isFetching &&
             Array.from({ length: 3 }).map((_, index) => (
               <PostSkeleton key={index} />
             ))}
         </section>
-        {hasMore && <button onClick={fetchMore}>Load more</button>}
-        {!hasMore && <p>No data left to load</p>}
-        {error && <p>{error}</p>}
+        {hasMore && (
+          <button
+            disabled={isFetching}
+            onClick={fetchMore}
+            className="cursor-pointer font-semibold text-primary-txt bg-primary px-3 py-1 rounded-lg hover:bg-primary-hover transition"
+          >
+            Load more
+          </button>
+        )}
       </MainLayout>
     </>
   );
