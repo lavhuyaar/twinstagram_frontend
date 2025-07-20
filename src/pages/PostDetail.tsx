@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { MdOutlineInsertComment } from "react-icons/md";
 import { IoMdHeart } from "react-icons/io";
+import { SlOptionsVertical } from "react-icons/sl";
 import { FaArrowLeft } from "react-icons/fa6";
 import useAuth from "../hooks/useAuth";
+import useOutsideClick from "../hooks/useOutsideClick";
 import MainLayout from "../components/MainLayout";
 import CommentsSection from "../sections/CommentsSection";
 import Error from "../components/Error";
 import PostDetailSkeleton from "../components/skeletons/PostDetailSkeleton";
+import Modal from "../components/Modal";
 import { handleAxiosError } from "../utils/handleAxiosError";
 import { axiosInstance } from "../api/axiosInstance";
 import timeAgo from "../utils/timeAgo";
@@ -21,8 +24,19 @@ const PostDetail = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | undefined>(undefined);
   const [likesLoading, setLikesLoading] = useState<boolean>(false);
+
+  // States related to Edit and Delete Post
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValidation, setInputValidation] = useState<string>("");
+
   const { userData } = useAuth();
 
+  const menuRef = useRef<HTMLDivElement>(null);
+  const { isOpen, openMenu, closeMenu } = useOutsideClick(menuRef);
   const navigate = useNavigate();
 
   const getPost = async () => {
@@ -31,6 +45,7 @@ const PostDetail = () => {
     try {
       const response = await axiosInstance.get(`/posts/post/${postId}`);
       setPost(response.data?.post);
+      setInputValue(response.data?.post?.content);
     } catch (err) {
       handleAxiosError(err, undefined, setError, true);
     } finally {
@@ -53,16 +68,102 @@ const PostDetail = () => {
 
   const thisPostLiked = post?.likes && post.likes[0]?.id === userData?.id;
 
+  // Go back to the last route user visited
+  const goBack = () => navigate(-1);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const enableEditMode = () => setIsEditMode(true);
+
+  // Cancels edit mode
+  const cancelEditing = () => {
+    setIsEditMode(false);
+    setInputValue(post?.content ?? "");
+    setInputValidation("");
+    closeMenu();
+  };
+
+  // Edits post
+  const editPost = async () => {
+    if (inputValidation) return;
+    if (!inputValue.trim()) {
+      setInputValidation("This field cannot be empty");
+      return;
+    }
+    if (inputValue.trim().length > 2000) {
+      setInputValidation("Cannot exceed 2000 characters");
+      return;
+    }
+
+    setIsEditing(true);
+
+    const values: {
+      content: string;
+      image?: string;
+    } = {
+      content: inputValue,
+    };
+
+    // If post already had an image from before
+    if (post?.image) {
+      values.image = post.image;
+    }
+
+    try {
+      const response = await axiosInstance.put(`/posts/${postId}`, values);
+      setPost(response.data?.post);
+      setIsEditMode(false);
+      setInputValue(response.data?.post?.content ?? "");
+      setInputValidation("");
+      closeMenu();
+    } catch (err) {
+      handleAxiosError(err, "Failed to edit post!");
+    } finally {
+      setIsEditing(false);
+    }
+  };
+
+  // Deletes post
+  const deletePost = async () => {
+    setIsDeleting(true);
+    try {
+      await axiosInstance.delete(`/posts/${postId}`);
+      navigate(`/u/${post?.userId}`, { replace: true });
+    } catch (err) {
+      handleAxiosError(err, "Failed to delete post!");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const textAreaOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.target.value;
+    const trimmed = value.trim();
+    if (!trimmed) {
+      setInputValidation("This field cannot be empty");
+    }
+    if (trimmed.length > 2000) {
+      setInputValidation("Cannot exceed 2000 characters");
+    } else {
+      setInputValidation("");
+    }
+
+    setInputValue(value);
+
+    // Dynamically changes the height of textarea
+    event.target.style.height = "auto";
+    event.target.style.height = `${event.target.scrollHeight}px`;
+  };
+
   useEffect(() => {
     if (!postId) return;
     getPost();
   }, []);
 
+  // Error
   if (error) {
     return <Error error={error} onRetry={getPost} />;
   }
-
-  const goBack = () => navigate(-1);
 
   return (
     <>
@@ -78,8 +179,8 @@ const PostDetail = () => {
           <PostDetailSkeleton />
         ) : (
           <>
-            <section className="flex flex-col w-full sm:w-5/6 bg-surface p-6 mt-6">
-              <section className="flex items-center gap-6 border-b border-text-muted/30 pb-4">
+            <section className={"flex flex-col w-full sm:w-5/6 bg-surface p-6 mt-6"}>
+              <section className="flex items-center gap-3 sm:gap-6 border-b border-text-muted/30 pb-4 relative">
                 <img
                   src={post?.user?.profilePicture ?? "/blank-pfp.webp"}
                   alt=""
@@ -99,7 +200,7 @@ const PostDetail = () => {
                           {timeAgo(post?.createdAt)}
                         </p>
                         {post?.createdAt !== post?.updatedAt && (
-                          <p className="text-text-muted text-xs">
+                          <p className="hidden sm:block text-text-muted text-xs">
                             (edited {timeAgo(post?.updatedAt)})
                           </p>
                         )}
@@ -110,11 +211,57 @@ const PostDetail = () => {
                     {post?.user?.firstName} {post?.user?.lastName}
                   </h4>
                 </div>
+                {userData?.id === post?.userId && !isEditMode && (
+                  <button
+                    onClick={isOpen ? closeMenu : openMenu}
+                    className="ml-auto md:pr-4 bg-none cursor-pointer"
+                  >
+                    <SlOptionsVertical />
+                  </button>
+                )}
+                {isOpen && !isEditMode && (
+                  <div
+                    className="bg-background absolute items-start rounded-md right-10 flex flex-col gap-2 px-6 py-2 top-0 text-start"
+                    ref={menuRef}
+                  >
+                    <button
+                      onClick={enableEditMode}
+                      className="text-text-primary hover:text-primary-hover transition cursor-pointer"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={openModal}
+                      className="text-text-primary hover:text-primary-hover transition cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </section>
               <section>
-                <pre className="mt-6 text-[13px] text-wrap w-full">
-                  {post?.content}
-                </pre>
+                {isEditMode ? (
+                  <div className="w-full flex flex-col gap-2 mt-6">
+                    <textarea
+                      onChange={textAreaOnChange}
+                      value={inputValue}
+                      name="edit_textarea"
+                      id="edit_textarea"
+                      placeholder="Share your thoughts..."
+                      autoFocus
+                      className="resize-none w-full focus:outline-none align-middle"
+                    ></textarea>
+                    {inputValidation && (
+                      <p className="text-red-600 w-full text-sm">
+                        {inputValidation}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <pre className="mt-6 text-[13px] text-wrap w-full">
+                    {post?.content}
+                  </pre>
+                )}
                 {post?.image && (
                   <img
                     src={post?.image}
@@ -125,7 +272,7 @@ const PostDetail = () => {
               </section>
               <section className="flex items-center gap-8 mt-4">
                 <button
-                  disabled={likesLoading}
+                  disabled={likesLoading || isEditing || isDeleting}
                   className="border-none bg-none cursor-pointer flex items-center gap-1"
                 >
                   <IoMdHeart
@@ -155,11 +302,63 @@ const PostDetail = () => {
                   )}
                 </button>
               </section>
+              {isEditMode && (
+                <div className="self-end flex items-center gap-3">
+                  <button
+                    disabled={isEditing || isDeleting}
+                    onClick={cancelEditing}
+                    className={`${
+                      isEditing ? "bg-primary/40" : ""
+                    } bg-primary/40 hover:bg-primary-hover rounded-2xl text-sm sm:text-[16px] transition px-2 py-1 text-primary-txt font-semibold cursor-pointer`}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    disabled={isEditing || isDeleting}
+                    className={`${isEditing ? "bg-primary/40" : ""} ${
+                      !inputValue.trim()
+                        ? "bg-primary/40"
+                        : "bg-primary hover:bg-primary-hover"
+                    } rounded-2xl transition px-4 py-1 text-primary-txt text-sm sm:text-[16px] font-semibold cursor-pointer`}
+                    onClick={editPost}
+                  >
+                    {isEditing ? "Editing Post..." : "Edit Post"}
+                  </button>
+                </div>
+              )}
             </section>
             <CommentsSection postId={post?.id} />
           </>
         )}
       </MainLayout>
+
+      {isModalOpen && (
+        <Modal>
+          <p>Are you sure you want to delete this post?</p>
+          <div className="flex gap-4 mt-4 justify-center items-center">
+            <button
+              onClick={closeModal}
+              disabled={isDeleting}
+              className={`${
+                isDeleting ? "" : "hover:bg-primary-hover"
+              } cursor-pointer px-4 py-2 bg-primary/40  transition text-primary-txt font-semibold`}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={deletePost}
+              disabled={isDeleting}
+              className={`${
+                isDeleting
+                  ? "bg-primary/40"
+                  : "bg-primary hover:bg-primary-hover"
+              } cursor-pointer px-4 py-2   transition text-primary-txt font-semibold`}
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };

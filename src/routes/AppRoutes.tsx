@@ -28,6 +28,7 @@ const AppRoutes = () => {
         autoClose={1000}
         hideProgressBar
         theme={theme}
+        style={{zIndex: 999999}}
         transition={Flip}
         position="top-center"
       />

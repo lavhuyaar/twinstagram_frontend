@@ -151,6 +151,7 @@ const AddPost = () => {
           ) : (
             <button
               onClick={() => fileInputRef.current?.click()}
+              type="button"
               className="w-full flex h-[400px] border border-primary/40 flex-col cursor-pointer p-3 items-center text-center justify-center"
             >
               <MdOutlineAddBox className="text-3xl sm:text-5xl" />
