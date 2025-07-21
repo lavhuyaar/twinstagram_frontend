@@ -132,7 +132,7 @@ const Comment = ({
             </p>
             {comment?.createdAt !== comment?.updatedAt && (
               <p className="text-text-muted text-xs">
-                (edited {timeAgo(comment?.updatedAt)})
+                (edited)
               </p>
             )}
 

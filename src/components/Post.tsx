@@ -87,9 +87,7 @@ const Post = memo(
                   {timeAgo(post?.createdAt)}
                 </p>
                 {post?.createdAt !== post?.updatedAt && (
-                  <p className="text-text-muted text-xs">
-                    (edited {timeAgo(post?.updatedAt)})
-                  </p>
+                  <p className="text-text-muted text-xs">(edited)</p>
                 )}
               </div>
               <p className="text-text-muted text-[11px]">

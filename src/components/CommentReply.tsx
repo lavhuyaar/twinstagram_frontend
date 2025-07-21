@@ -81,9 +81,7 @@ const CommentReply = ({
               {timeAgo(subComment?.createdAt)}
             </p>
             {subComment?.createdAt !== subComment?.updatedAt && (
-              <p className="text-text-muted text-xs">
-                (edited {timeAgo(subComment?.updatedAt)})
-              </p>
+              <p className="text-text-muted text-xs">(edited)</p>
             )}
           </div>
 

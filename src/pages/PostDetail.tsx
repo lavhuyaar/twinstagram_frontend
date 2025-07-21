@@ -179,7 +179,9 @@ const PostDetail = () => {
           <PostDetailSkeleton />
         ) : (
           <>
-            <section className={"flex flex-col w-full sm:w-5/6 bg-surface p-6 mt-6"}>
+            <section
+              className={"flex flex-col w-full sm:w-5/6 bg-surface p-6 mt-6"}
+            >
               <section className="flex items-center gap-3 sm:gap-6 border-b border-text-muted/30 pb-4 relative">
                 <img
                   src={post?.user?.profilePicture ?? "/blank-pfp.webp"}
@@ -200,9 +202,7 @@ const PostDetail = () => {
                           {timeAgo(post?.createdAt)}
                         </p>
                         {post?.createdAt !== post?.updatedAt && (
-                          <p className="hidden sm:block text-text-muted text-xs">
-                            (edited {timeAgo(post?.updatedAt)})
-                          </p>
+                          <p className="text-text-muted text-xs">(edited)</p>
                         )}
                       </>
                     )}
