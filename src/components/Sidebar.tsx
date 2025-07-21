@@ -1,11 +1,7 @@
 import { Link, NavLink } from "react-router";
 import { MdLogout, MdOutlineAddBox, MdOutlinePending } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-import {
-  IoHomeSharp,
-  IoPeopleOutline,
-  IoSettingsOutline,
-} from "react-icons/io5";
+import { IoHomeSharp, IoSearch, IoSettingsOutline } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
 
@@ -36,9 +32,9 @@ const Sidebar = ({ className }: { className?: string }) => {
       icon: <IoIosSend className="text-xl" />,
     },
     {
-      path: "/feedadadadad",
-      text: "Find More People",
-      icon: <IoPeopleOutline className="text-xl" />,
+      path: "/search-people",
+      text: "Search People",
+      icon: <IoSearch className="text-xl" />,
     },
     {
       path: "/post/new",

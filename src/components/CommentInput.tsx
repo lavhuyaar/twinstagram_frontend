@@ -40,7 +40,9 @@ const CommentInput = ({
     const inputValue = event.target.value;
     setValue(inputValue);
 
-    if (inputValue.trim()) {
+    const trimmed = inputValue.trim();
+
+    if (trimmed && trimmed.length <= 200) {
       setValidation("");
     } else {
       setValidation("Comment must be between 1 and 200 characters.");
@@ -56,7 +58,7 @@ const CommentInput = ({
   };
 
   const commentOnSubmit = async () => {
-    if (!value.trim()) {
+    if (!value.trim() || value.trim().length > 200) {
       setValidation("Comment must be between 1 and 200 characters.");
     }
     if (validation || !value.trim()) return;

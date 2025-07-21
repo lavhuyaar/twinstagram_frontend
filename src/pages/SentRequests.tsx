@@ -63,7 +63,7 @@ const SentRequests = () => {
           This is the list of people whom you have requested to follow
         </em>
         <span className="w-full h-[2px] bg-primary mt-1"></span>
-        <div className="flex flex-col mt-6 md:mt-12 w-full">
+        <section className="flex flex-col mt-6 md:mt-12 w-full">
           {loading ? (
             Array.from({ length: 8 }).map((_, index) => (
               <RequestSkeleton key={index} />
@@ -116,7 +116,7 @@ const SentRequests = () => {
               </h4>
             </div>
           )}
-        </div>
+        </section>
       </MainLayout>
     </>
   );
