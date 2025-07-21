@@ -1,10 +1,9 @@
 import { useSearchParams } from "react-router";
-import { BiInfoSquare } from "react-icons/bi";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import useAuth from "../hooks/useAuth";
 import MainLayout from "../components/MainLayout";
 import ThemeToggler from "../components/ThemeToggler";
 import ProfileTypeToggler from "../components/ProfileTypeToggler";
-import AboutSection from "../sections/AboutSection";
 import EditProfileSection from "../sections/EditProfileSection";
 
 const List = ({
@@ -33,6 +32,7 @@ const List = ({
 
 const Settings = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { logoutUser } = useAuth();
 
   const optionOnClick = (value: string) => {
     const params = new URLSearchParams();
@@ -66,13 +66,6 @@ const Settings = () => {
               <MdKeyboardArrowRight className="text-2xl" />
             </List>
 
-            <List title="About" onClick={() => optionOnClick("about")}>
-              <span className="flex items-center gap-2">
-                About <BiInfoSquare className="text-xl" />
-              </span>
-              <MdKeyboardArrowRight className="text-2xl" />
-            </List>
-
             <List title="Enable Dark Mode">
               Enable Dark Mode
               <ThemeToggler />
@@ -86,10 +79,14 @@ const Settings = () => {
               When your account is private, only people following you can see
               your posts, following and followers.
             </em>
+
+            <List className="py-5 mt-12" title="Logout" onClick={logoutUser}>
+              Logout
+              <MdKeyboardArrowRight className="text-2xl" />
+            </List>
           </section>
         )}
         {selectedOption === "edit_profile" && <EditProfileSection />}
-        {selectedOption === "about" && <AboutSection />}
       </MainLayout>
     </>
   );
