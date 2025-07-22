@@ -43,7 +43,7 @@ P.s. - It's an Instagram clone, minus the chat feature (and a LOTTT of other fea
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/twinstagram-frontend.git
+git clone https://github.com/lavhuyaar/twinstagram_frontend.git
 cd twinstagram-frontend
 ```
 
