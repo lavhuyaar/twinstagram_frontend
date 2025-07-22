@@ -77,7 +77,7 @@ const ProfilePosts = ({
 
   return (
     <>
-      <section className="flex gap-5 flex-wrap mx-auto justify-center justify-self-center my-6">
+      <section className="flex gap-5 w-full flex-wrap justify-center justify-self-center my-6">
         {posts && posts.length > 0 ? (
           posts.map((post) => <Post {...post} key={post?.id} />)
         ) : (
