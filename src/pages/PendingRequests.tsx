@@ -74,13 +74,15 @@ const PendingRequests = () => {
   return (
     <>
       <MainLayout>
-        <h1 className="text-3xl font-bold w-full text-start text-primary">
-          Pending Requests
-        </h1>
-        <em className="text-start w-full mt-1 text-sm text-text-muted">
-          This is the list of people who have requested to follow you
-        </em>
-        <span className="w-full h-[2px] bg-primary mt-1"></span>
+        <section className="flex flex-col w-full">
+          <h1 className="text-3xl font-bold w-full text-start text-primary">
+            Sent Requests
+          </h1>
+          <em className="text-start w-full mt-1 text-sm text-text-muted">
+            This is the list of people whom you have requested to follow
+          </em>
+          <span className="w-full h-[2px] bg-primary mt-1"></span>
+        </section>
         <div className="flex flex-col mt-6 md:mt-12 w-full">
           {loading ? (
             Array.from({ length: 8 }).map((_, index) => (
