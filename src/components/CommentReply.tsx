@@ -72,7 +72,7 @@ const CommentReply = ({
         <div className="flex flex-col w-full">
           <div className="flex items-center w-full gap-3">
             <Link
-              to={`/user/${subComment?.userId}`}
+              to={`/u/${subComment?.userId}`}
               className="text-sm font-semibold hover:text-primary transition"
             >
               @{subComment?.user?.username}

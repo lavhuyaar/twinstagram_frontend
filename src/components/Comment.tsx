@@ -122,7 +122,7 @@ const Comment = ({
         <div className="flex flex-col w-full">
           <div className="flex items-center w-full gap-3 relative">
             <Link
-              to={`/user/${comment?.userId}`}
+              to={`/u/${comment?.userId}`}
               className="font-semibold hover:text-primary transition text-sm"
             >
               @{user?.username}
