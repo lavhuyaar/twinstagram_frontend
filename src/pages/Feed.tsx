@@ -27,14 +27,15 @@ const Feed = () => {
           </Link>
         </div>
 
-        <section className="flex gap-5 flex-wrap mx-auto justify-center justify-self-center my-12">
-          {posts.length > 0 ? (
-            posts.map((post) => <Post {...post} key={post?.id} />)
-          ) : (
-            <div className="p-3 w-full text-lg font-medium text-center flex items-center justify-center min-h-[60vh]">
-              No posts are available in your feed :(
-            </div>
-          )}
+        <section className="flex gap-5 w-full flex-wrap justify-center justify-self-center my-12">
+          {posts.length > 0
+            ? posts.map((post) => <Post {...post} key={post?.id} />)
+            : !isFetching &&
+              posts.length === 0 && (
+                <div className="p-3 w-full text-lg font-medium text-center flex items-center justify-center min-h-[60vh]">
+                  No posts are available in your feed :(
+                </div>
+              )}
           {isFetching &&
             Array.from({ length: 3 }).map((_, index) => (
               <PostSkeleton key={index} />
