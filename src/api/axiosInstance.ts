@@ -12,8 +12,9 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error.response.status === 401) {
+    if ([401, 403].includes(error.response.status)) {
       localStorage.removeItem("twinstagram_logged_in_user");
+      window.location.href = '/auth/login';
     }
     return Promise.reject(error);
   }
