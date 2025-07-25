@@ -7,12 +7,12 @@ export const axiosInstance = axios.create({
 });
 
 // Automatically logs out User if token in HTTP Cookie is not found
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
   function (error) {
-    if ([401, 403].includes(error.response.status)) {
+    if (error.response && [401, 403].includes(error.response.status)) {
       localStorage.removeItem("twinstagram_logged_in_user");
       window.location.href = '/auth/login';
     }
